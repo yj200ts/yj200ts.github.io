@@ -1,38 +1,42 @@
 ---
-// 导航栏组件，所有页面复用
+// 页面配置
+const siteName = "小庭小世界";
+const slogan = "这是我的地盘！hhh";
 ---
 
-<nav class="navbar">
-  <div class="nav-container">
-    <a href=" " class="nav-logo">时光小筑</a >
-    <div class="nav-links">
-      <a href="/">首页</a >
-      <a href="/diary">小日记</a >
-      <a href="/review">书评影评</a >
-      <a href="/memories">回忆区</a >
-      <a href="/guestbook">留言板</a >
-      <a href="/ask">提问箱</a >
-      <a href="/postcard">明信片</a >
-      <a href="/about">关于我</a >
-    </div>
-    <div class="nav-search">
-      <input type="text" placeholder="搜索日记、书评..." />
-    </div>
-  </div>
-</nav>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{siteName}</title>
+  <style>
+/* 全局样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Microsoft Yahei", sans-serif;
+  /* 浅粉渐变背景 */
+  background: linear-gradient(135deg, #fff0f6 0%, #ffeef8 100%);
+  color: #5a5a5a;
+  line-height: 1.6;
+}
 
-<style>
-.navbar {
-  background: rgba(255,255,255,0.95);
-  padding: 1rem 0;
+/* 顶部导航栏 */
+nav {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 10px rgba(255, 105, 180, 0.1);
   position: sticky;
   top: 0;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 100;
 }
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -40,7 +44,7 @@
 .nav-logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #667eea;
+  color: #ff69b4; /* 樱花粉主题色 */
   text-decoration: none;
 }
 .nav-links {
@@ -49,52 +53,136 @@
 }
 .nav-links a {
   text-decoration: none;
-  color: #333;
+  color: #666;
   transition: color 0.3s;
 }
 .nav-links a:hover {
-  color: #667eea;
+  color: #ff69b4;
 }
-/* 手机端适配（响应式） */
-@media (max-width: 768px) {
-  .nav-links {
-    display: none; /* 可后续改成汉堡菜单 */
-  }
-}
-</style>
----
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
----
 
-<Navbar />
-<main class="home">
-  <!-- Banner 区域 -->
+/* 首页 Banner */
+.banner {
+  /* 温柔粉渐变 */
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+  color: white;
+  padding: 5rem 2rem;
+  text-align: center;
+}
+.banner h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(255, 105, 180, 0.2);
+}
+.banner p {
+  font-size: 1.2rem;
+  opacity: 0.95;
+}
+
+/* 核心版块入口 */
+.sections {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+.section-card {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.1);
+  transition: transform 0.3s;
+}
+.section-card:hover {
+  transform: translateY(-5px);
+}
+.section-card h3 {
+  color: #ff69b4;
+  margin-bottom: 1rem;
+}
+.section-card p {
+  color: #777;
+  margin-bottom: 1.5rem;
+}
+.section-card a {
+  color: #ff69b4;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* 最新动态 */
+.latest {
+  max-width: 1200px;
+  margin: 0 auto 3rem;
+  padding: 0 2rem;
+}
+.latest h2 {
+  color: #ff69b4;
+  margin-bottom: 1.5rem;
+}
+.latest-item {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(255, 105, 180, 0.1);
+}
+
+/* 底部信息 */
+footer {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  text-align: center;
+  color: #999;
+  border-top: 1px solid rgba(255, 105, 180, 0.15);
+}
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <nav>
+    <div class="nav-container">
+      <a href=" " class="nav-logo">{siteName}</a >
+      <div class="nav-links">
+        <a href="/">首页</a >
+        <a href="/diary">小日记</a >
+        <a href="/review">书评影评</a >
+        <a href="/memories">回忆区</a >
+        <a href="/guestbook">留言板</a >
+        <a href="/ask">提问箱</a >
+        <a href="/postcard">明信片</a >
+        <a href="/about">关于我</a >
+      </div>
+    </div>
+  </nav>
+
+  <!-- 首页 Banner -->
   <section class="banner">
-    <h1>我的时光小筑，藏着温柔与热爱</h1>
-    <p>记录日常、分享感悟、联结同好，一起留存珍贵回忆</p >
+    <h1>欢迎来到 {siteName}</h1>
+    <p>{slogan}</p >
   </section>
 
   <!-- 核心版块入口 -->
   <section class="sections">
     <div class="section-card">
       <h3>📝 小日记</h3>
-      <p>记录日常碎碎念与心情感悟</p >
-      <a href=" ">去看看 →</a >
+      <p>记录日常碎碎念与心情感悟，按日期和标签整理</p >
+      <a href="/diary">去看看 →</a >
     </div>
     <div class="section-card">
       <h3>📚 书评影评</h3>
-      <p>分享书籍与电影的所思所想</p >
+      <p>分享书籍与电影的所思所想，和同好互动讨论</p >
       <a href="/review">去看看 →</a >
     </div>
     <div class="section-card">
-      <h3>📸 回忆区</h3>
-      <p>珍藏过往的珍贵瞬间</p >
+      <h3>📮🎑 postcard</h3>
+      <p>和我一起互寄吧！</p >
       <a href="/memories">去看看 →</a >
     </div>
     <div class="section-card">
       <h3>💬 留言板</h3>
-      <p>留下你的足迹与心意</p >
+      <p>留下你的足迹与心意，轻量互动交流</p >
       <a href="/guestbook">去看看 →</a >
     </div>
   </section>
@@ -108,39 +196,14 @@ import Footer from '../components/Footer.astro';
     <div class="latest-item">
       <span>📚 2026-03-20 | 书评：《解忧杂货店》读后感</span>
     </div>
+    <div class="latest-item">
+      <span>💬 2026-03-19 | 留言板：新朋友来啦！</span>
+    </div>
   </section>
-</main>
-<Footer />
 
-<style>
-.home {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-.banner {
-  text-align: center;
-  padding: 4rem 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-radius: 20px;
-  margin-bottom: 3rem;
-}
-.sections {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3rem;
-}
-.section-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-.latest {
-  background: white;
-  padding: 2rem;
-  border-radius: 15px;
-}
-</style>
+  <!-- 底部信息 -->
+  <footer>
+    <p>© 2026 {siteName} | 记录生活，留存回忆</p >
+  </footer>
+</body>
+</html>
