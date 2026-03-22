@@ -1,11 +1,146 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// 导航栏组件，所有页面复用
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<nav class="navbar">
+  <div class="nav-container">
+    <a href=" " class="nav-logo">时光小筑</a >
+    <div class="nav-links">
+      <a href="/">首页</a >
+      <a href="/diary">小日记</a >
+      <a href="/review">书评影评</a >
+      <a href="/memories">回忆区</a >
+      <a href="/guestbook">留言板</a >
+      <a href="/ask">提问箱</a >
+      <a href="/postcard">明信片</a >
+      <a href="/about">关于我</a >
+    </div>
+    <div class="nav-search">
+      <input type="text" placeholder="搜索日记、书评..." />
+    </div>
+  </div>
+</nav>
+
+<style>
+.navbar {
+  background: rgba(255,255,255,0.95);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #667eea;
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s;
+}
+.nav-links a:hover {
+  color: #667eea;
+}
+/* 手机端适配（响应式） */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* 可后续改成汉堡菜单 */
+  }
+}
+</style>
+---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Navbar />
+<main class="home">
+  <!-- Banner 区域 -->
+  <section class="banner">
+    <h1>我的时光小筑，藏着温柔与热爱</h1>
+    <p>记录日常、分享感悟、联结同好，一起留存珍贵回忆</p >
+  </section>
+
+  <!-- 核心版块入口 -->
+  <section class="sections">
+    <div class="section-card">
+      <h3>📝 小日记</h3>
+      <p>记录日常碎碎念与心情感悟</p >
+      <a href=" ">去看看 →</a >
+    </div>
+    <div class="section-card">
+      <h3>📚 书评影评</h3>
+      <p>分享书籍与电影的所思所想</p >
+      <a href="/review">去看看 →</a >
+    </div>
+    <div class="section-card">
+      <h3>📸 回忆区</h3>
+      <p>珍藏过往的珍贵瞬间</p >
+      <a href="/memories">去看看 →</a >
+    </div>
+    <div class="section-card">
+      <h3>💬 留言板</h3>
+      <p>留下你的足迹与心意</p >
+      <a href="/guestbook">去看看 →</a >
+    </div>
+  </section>
+
+  <!-- 最新动态 -->
+  <section class="latest">
+    <h2>最新动态</h2>
+    <div class="latest-item">
+      <span>📝 2026-03-22 | 小日记：今天的风很温柔</span>
+    </div>
+    <div class="latest-item">
+      <span>📚 2026-03-20 | 书评：《解忧杂货店》读后感</span>
+    </div>
+  </section>
+</main>
+<Footer />
+
+<style>
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.banner {
+  text-align: center;
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 20px;
+  margin-bottom: 3rem;
+}
+.sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.section-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.latest {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+}
+</style>
