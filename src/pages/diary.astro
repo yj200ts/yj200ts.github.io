@@ -1,0 +1,169 @@
+---
+// 这里可以放你的前端脚本数据（如果有的话）
+// 示例数据：如果没有后台，直接写死在这里也能正常显示
+const siteName = "小庭小世界";
+const diaryEntries = [
+  {
+    date: "2026-03-22",
+    content: "晚上去吃了麦香鱼，好美味，我爱吃麦香鱼。没吃过的一定要试一试，入口即化！！！！！！",
+    // 注意：这里的图片路径要填对，比如放在 public/images 下，这里就写 /images/your-img.jpg
+    image: "/assets/maixiangyu.jpg" // 🔥 请替换成你真实的图片地址
+  },
+  {
+    date: "2026-03-22",
+    content: "我正在建设我的网站！图片终于出现了！",
+    image: "/assets/jianshezhong.jpg"
+  }
+];
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我的小日记 | {siteName}</title>
+  
+  <!-- 🔥 直接嵌入样式，无需担心 global.css 路径问题，保证粉色生效 -->
+  <style is:raw>
+    /* 全局重置 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Microsoft Yahei", sans-serif;
+      /* 首页同款温柔粉渐变背景 */
+      background: linear-gradient(135deg, #fff0f6 0%, #ffeef8 100%);
+      color: #5a5a5a;
+      line-height: 1.6;
+    }
+
+    /* 导航栏（与首页完全一致） */
+    nav {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(230, 73, 128, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #e64980; /* 深粉色 Logo */
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #666;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: #e64980;
+    }
+
+    /* 日记页面主体样式 */
+    .page {
+      max-width: 800px; /* 限制宽度，看起来更舒服 */
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+    .page h1 {
+      color: #e64980; /* 粉色大标题 */
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    /* 单条日记卡片 */
+    .item {
+      background: rgba(255, 255, 255, 0.85); /* 半透明白色卡片 */
+      padding: 1.5rem;
+      border-radius: 12px; /* 圆角 */
+      box-shadow: 0 2px 8px rgba(230, 73, 128, 0.1); /* 粉嫩阴影 */
+      margin-bottom: 2rem;
+    }
+    .item-date {
+      color: #999;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .item-content {
+      color: #5a5a5a;
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+    }
+
+    /* 🔥 关键：图片缩小并居中 */
+    .item img {
+      width: 50%; /* 缩小到容器的50% */
+      max-width: 300px; /* 最大不超过300px */
+      height: auto; /* 保持比例，不变形 */
+      border-radius: 8px; /* 图片圆角 */
+      display: block; /* 必须块级才能居中 */
+      margin: 1rem auto; /* 上下间距，水平居中 */
+    }
+
+    /* 底部信息 */
+    footer {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2rem;
+      text-align: center;
+      color: #999;
+      border-top: 1px solid rgba(230, 73, 128, 0.15);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav>
+    <div class="nav-container">
+      <a href=" " class="nav-logo">{siteName}</a >
+      <div class="nav-links">
+        <a href="/">首页</a >
+        <a href="/diary">小日记</a >
+        <a href="/review">书评影评</a >
+        <a href="/memories">回忆区</a >
+        <a href="/guestbook">留言板</a >
+        <a href="/ask">提问箱</a >
+        <a href="/postcard">明信片</a >
+        <a href="/about">关于我</a >
+      </div>
+    </div>
+  </nav>
+
+  <!-- 日记列表 -->
+  <main class="page">
+    <h1>📝 我的小日记</h1>
+    {diaryEntries.map(entry => (
+      <div class="item">
+        <div class="item-date">{entry.date}</div>
+        <div class="item-content">{entry.content}</div>
+        <!-- 条件渲染图片，且已经加了样式 -->
+        {entry.image && (
+          <img src={entry.image} alt="日记配图" />
+        )}
+      </div>
+    ))}
+  </main>
+
+  <!-- 底部 -->
+  <footer>
+    <p>© 2026 {siteName} | 记录生活，留存回忆</p >
+  </footer>
+</body>
+</html>
