@@ -16,13 +16,18 @@ const siteName = "小庭小世界";
       padding: 0;
       box-sizing: border-box;
     }
-    body {
-      font-family: "Microsoft Yahei", sans-serif;
-      background: linear-gradient(135deg, #fff0f6 0%, #ffeef8 100%);
-      color: #5a5a5a;
-      line-height: 1.6;
-    }
-
+body {
+  font-family: "Microsoft Yahei", sans-serif;
+  /* 浅粉色底 + 温柔棕色波点 */
+  background-color: #fff0f6;
+  background-image: radial-gradient(pink 2px, transparent 2px); /* 棕色波点 */
+  background-size: 20px 20px; /* 波点间距，20px更密集，显眼 */
+  background-repeat: repeat; /* 强制重复平铺 */
+  background-position: 0 0; /* 从左上角开始排列 */
+  min-height: 100vh; /* 铺满整个页面 */
+  color: #5a5a5a;
+  line-height: 1.6;
+}
     /* 导航栏（和全站保持一致） */
     nav {
       background: rgba(255, 255, 255, 0.9);
@@ -236,7 +241,7 @@ const siteName = "小庭小世界";
 
   <!-- 音影书评内容区 -->
   <main class="page">
-    <h1>📖 我的音影书评</h1>
+    <h1>🎵 我的音影书评</h1>
     
     <!-- 分类标签 -->
     <div class="category-tabs">

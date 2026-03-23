@@ -9,7 +9,6 @@ const slogan = "这是我的地盘！hhh";
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{siteName}</title>
-  <!-- 所有样式直接写在这里，不再依赖外部文件 -->
   <style is:raw>
     /* 全局样式 */
     * {
@@ -19,9 +18,14 @@ const slogan = "这是我的地盘！hhh";
     }
     body {
       font-family: "Microsoft Yahei", sans-serif;
-      background: linear-gradient(135deg, #fff0f6 0%, #ffeef8 100%);
+      /* 极简写法：纯色背景 + 高对比度波点，必显！ */
+      background-color: #fff0f6; /* 基础粉色底 */
+      background-image: radial-gradient(#e64980 2px, transparent 2px); /* 深粉色波点 */
+      background-size: 30px 30px; /* 波点间距，越大越稀疏 */
+      background-position: 0 0; /* 波点起始位置 */
       color: #5a5a5a;
       line-height: 1.6;
+      min-height: 100vh; /* 铺满整个页面 */
     }
 
     /* 导航栏 */
@@ -64,6 +68,8 @@ const slogan = "这是我的地盘！hhh";
       color: white;
       padding: 4rem 2rem;
       text-align: center;
+      /* 遮挡banner内的波点 */
+      background-image: linear-gradient(135deg, #f8a5c2 0%, #fadadd 100%);
     }
     .banner h1 {
       font-size: 2.2rem;
@@ -131,6 +137,8 @@ const slogan = "这是我的地盘！hhh";
       text-align: center;
       color: #999;
       border-top: 1px solid rgba(230, 73, 128, 0.15);
+      /* 遮挡footer内的波点 */
+      background-image: none;
     }
   </style>
 </head>
@@ -138,15 +146,15 @@ const slogan = "这是我的地盘！hhh";
   <!-- 导航 -->
   <nav>
     <div class="nav-container">
-      <a href=" " class="nav-logo">{siteName}</a >
+      <a href="/" class="nav-logo">{siteName}</a>
       <div class="nav-links">
-        <a href="/">首页</a >
-        <a href="/diary">小日记</a >
-        <a href="/review">书评影评</a >
-        <a href="/guestbook">留言板</a >
-        <a href="/ask">提问箱</a >
-        <a href="/postcard">明信片</a >
-        <a href="/about">关于我</a >
+        <a href="/">首页</a>
+        <a href="/diary">小日记</a>
+        <a href="/review">音影书评</a>
+        <a href="/guestbook">留言板</a>
+        <a href="/ask">提问箱</a>
+        <a href="/postcard">明信片</a>
+        <a href="/about">关于我</a>
       </div>
     </div>
   </nav>
@@ -154,44 +162,48 @@ const slogan = "这是我的地盘！hhh";
   <!-- 粉色渐变 Banner -->
   <section class="banner">
     <h1>欢迎来到 {siteName}</h1>
-    <p>{slogan}</p >
+    <p>{slogan}</p>
   </section>
 
   <!-- 卡片模块 -->
   <section class="sections">
     <div class="section-card">
       <h3>📝 小日记</h3>
-      <p>记录日常碎碎念与心情感悟，按日期和标签整理</p >
-      <a href="/diary">去看看 →</a >
+      <p>日常碎碎碎碎碎碎念！</p>
+      <a href="/diary">去看看 →</a>
     </div>
     <div class="section-card">
-      <h3>📚 书评影评</h3>
-      <p>分享书籍与电影的所思所想，和同好互动讨论</p >
-      <a href="/review">去看看 →</a >
+      <h3>🎵音影书评</h3>
+      <p>严肃评价！</p>
+      <a href="/review">去看看 →</a>
     </div>
     <div class="section-card">
       <h3>📮🎑 postcard</h3>
-      <p>和我一起互寄吧！</p >
-      <a href="/postcard">去看看 →</a >
+      <p>和我一起互寄吧！</p>
+      <a href="/postcard">去看看 →</a>
     </div>
     <div class="section-card">
       <h3>💬 留言板</h3>
-      <p>留下你的足迹与心意，轻量互动交流</p >
-      <a href="/guestbook">去看看 →</a >
+      <p>留下你的足迹与心意流</p>
+      <a href="/guestbook">去看看 →</a>
     </div>
   </section>
 
   <!-- 更新明细 -->
   <section class="latest">
     <h2>最新动态</h2>
-    <div class="latest-item">
-      <span> ⚙️ 2026-03-22 | 更新了小日记和关于我 </span>
-    </div>
+<div class="latest-item" style="margin-bottom: 1rem;">
+  <span>⚙️ 2026-03-23 | 更新了影音书评、留言板 </span>
+</div>
+
+<div class="latest-item" style="margin-bottom: 1rem;">
+  <span>⚙️ 2026-03-22 | 更新了小日记和关于我 </span>
+</div>
   </section>
 
   <!-- 底部 -->
   <footer>
-    <p>© 2026 {siteName} | 这是小庭的地盘，正在吃茄子的人不得入内</p >
+    <p>© 2026 {siteName} | 这是小庭的地盘，正在吃茄子的人不得入内</p>
   </footer>
 </body>
 </html>
