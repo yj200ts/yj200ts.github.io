@@ -1,0 +1,425 @@
+---
+const siteName = "小庭小世界";
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>音影书评 | {siteName}</title>
+  
+  <style is:raw>
+    /* 全局样式（和全站保持一致） */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Microsoft Yahei", sans-serif;
+      background: linear-gradient(135deg, #fff0f6 0%, #ffeef8 100%);
+      color: #5a5a5a;
+      line-height: 1.6;
+    }
+
+    /* 导航栏（和全站保持一致） */
+    nav {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(230, 73, 128, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #e64980;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #666;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: #e64980;
+    }
+    /* 当前页面导航高亮 */
+    .nav-links a.active {
+      color: #e64980;
+      font-weight: 600;
+    }
+
+    /* 页面主体 */
+    .page {
+      max-width: 1000px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+    .page h1 {
+      color: #e64980;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      text-align: center;
+    }
+    
+    /* 分类标签 */
+    .category-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .category-tab {
+      padding: 0.5rem 1.5rem;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+    }
+    .category-tab.active {
+      background: #e64980;
+      color: white;
+    }
+    .category-tab:hover {
+      border-color: #e64980;
+    }
+
+    /* 音乐二级分类标签 */
+    .music-sub-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0 2rem;
+      flex-wrap: wrap;
+    }
+    .music-sub-tab {
+      padding: 0.4rem 1.2rem;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1px solid #ffeef8;
+      font-size: 0.9rem;
+    }
+    .music-sub-tab.active {
+      background: #e64980;
+      color: white;
+      border-color: #e64980;
+    }
+    .music-sub-tab:hover {
+      border-color: #e64980;
+    }
+
+    /* 卡片容器 */
+    .review-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    /* 音影书卡片 */
+    .review-card {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(230, 73, 128, 0.1);
+      transition: transform 0.3s;
+    }
+    .review-card:hover {
+      transform: translateY(-5px);
+    }
+    .review-card h3 {
+      color: #e64980;
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+    }
+    .review-card .tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 10px;
+      background: #ffeef8;
+      color: #e64980;
+      margin-bottom: 1rem;
+    }
+    .review-card .sub-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.6rem;
+      border-radius: 8px;
+      background: #fff0f6;
+      color: #e64980;
+      margin-left: 0.5rem;
+    }
+    .review-card .rating {
+      color: #ff9a9e;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    .review-card .desc {
+      color: #666;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .review-card .date {
+      font-size: 0.85rem;
+      color: #999;
+    }
+
+    /* 空状态提示 */
+    .empty-tip {
+      text-align: center;
+      padding: 3rem;
+      color: #999;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 12px;
+    }
+
+    /* 底部 */
+    footer {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2rem;
+      text-align: center;
+      color: #999;
+      border-top: 1px solid rgba(230, 73, 128, 0.15);
+      margin-top: 3rem;
+    }
+
+    /* 响应式适配 */
+    @media (max-width: 768px) {
+      .nav-links {
+        gap: 1rem;
+        font-size: 0.9rem;
+      }
+      .review-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏（和全站一致） -->
+  <nav>
+    <div class="nav-container">
+      <a href=" " class="nav-logo">{siteName}</a >
+      <div class="nav-links">
+        <a href="/">首页</a >
+        <a href="/diary">小日记</a >
+        <a href="/review" class="active">音影书评</a >
+        <a href="/guestbook">留言板</a >
+        <a href="/ask">提问箱</a >
+        <a href="/postcard">明信片</a >
+        <a href="/about">关于我</a >
+      </div>
+    </div>
+  </nav>
+
+  <!-- 音影书评内容区 -->
+  <main class="page">
+    <h1>📖 我的音影书评</h1>
+    
+    <!-- 分类标签 -->
+    <div class="category-tabs">
+      <div class="category-tab active" data-category="全部">全部</div>
+      <div class="category-tab" data-category="音乐">音乐</div>
+      <div class="category-tab" data-category="书籍">书籍</div>
+      <div class="category-tab" data-category="电影">电影</div>
+      <div class="category-tab" data-category="剧集">剧集</div>
+      <div class="category-tab" data-category="综艺">综艺</div>
+    </div>
+
+    <!-- 音乐二级分类（默认隐藏） -->
+    <div class="music-sub-tabs" id="musicSubTabs" style="display: none;">
+      <div class="music-sub-tab active" data-subcategory="全部">全部音乐</div>
+      <div class="music-sub-tab" data-subcategory="不用带脑子听">不用带脑子听</div>
+      <div class="music-sub-tab" data-subcategory="听了静不下心">听了静不下心</div>
+    </div>
+    
+    <!-- 书评影评列表 -->
+
+
+
+    <div class="review-container">
+
+
+<div class="review-card" data-category="综艺">
+     <h3>开始捉迷藏1</h3>
+     <span class="tag">综艺</span> 
+     <div class="rating">⭐⭐⭐⭐ (4/5)</div>
+     <p class="desc">超级好看！很爱孟欢&楼嘉豪</p >
+     <div class="date">2026.03.23</div>
+     </div>
+
+   <div class="review-card" data-category="综艺">
+     <h3>开始捉迷藏2</h3>
+     <span class="tag">综艺</span> 
+     <div class="rating">⭐⭐ (2/5)</div>
+     <p class="desc">不如第一季。纯代餐节目</p >
+     <div class="date">2026.03.23</div>
+     </div>
+      <!-- 音乐示例：一路顺风 -->
+      <div class="review-card" data-category="音乐" data-subcategory="不用带脑子听">
+        <h3>一路顺风</h3>
+        <span class="tag">音乐</span>
+        <span class="sub-tag">不用带脑子听</span>
+        <div class="rating">⭐⭐⭐⭐ (4/5)</div>
+        <p class="desc">词曲很抒情温柔，闽台语歌曲，卢广仲的声音很加分，我爱卢广仲</p >
+        <div class="date">2026.03.23</div>
+      </div>
+
+      <div class="review-card" data-category="音乐" data-subcategory="不用带脑子听">
+      <h3>轻轻</h3>
+      <span class="tag">音乐</span>
+      <span class="sub-tag">不用带脑子听 </span>
+      <div class="rating">⭐⭐⭐⭐⭐ (满分)</div>
+      <p class="desc">卢广仲的声音如同巧克力一样划过耳朵，很美味了...</p >
+      <div class="date">2026.03.23</div>
+     </div>
+
+      <!-- 书籍示例 -->
+      <div class="review-card" data-category="书籍">
+        <h3>山茶文具店</h3>
+        <span class="tag">书籍</span>
+        <div class="rating">⭐⭐⭐⭐⭐ (满分)</div>
+        <p class="desc">一本温暖到骨子里的书，在镰仓的小小文具店里，写着代笔信，治愈着每一个人的心事。读完感觉整个世界都温柔了起来。</p >
+        <div class="date">2026.02.15</div>
+      </div>
+      
+      <!-- 电影示例 -->
+      <div class="review-card" data-category="电影">
+        <h3>人生大事</h3>
+        <span class="tag">电影</span>
+        <div class="rating">⭐⭐⭐⭐ (4/5)</div>
+        <p class="desc">殡葬题材却拍得温暖又治愈，朱一龙的表演太有感染力了。人生除死无大事，珍惜眼前人，好好活着就是最大的人生大事。</p >
+        <div class="date">2026.01.20</div>
+      </div>
+      
+      <!-- 剧集示例 -->
+      <div class="review-card" data-category="剧集">
+        <h3>重启人生</h3>
+        <span class="tag">剧集</span>
+        <div class="rating">⭐⭐⭐⭐⭐ (满分)</div>
+        <p class="desc">平淡又治愈的日式生活剧，一遍遍重启人生不是为了变得多厉害，而是为了弥补遗憾，守护身边的人。看完好想珍惜当下的每一天。</p >
+        <div class="date">2026.03.05</div>
+      </div>
+      
+      <!-- 书籍示例 -->
+      <div class="review-card" data-category="书籍">
+        <h3>云边有个小卖部</h3>
+        <span class="tag">书籍</span>
+        <div class="rating">⭐⭐⭐⭐ (4/5)</div>
+        <p class="desc">张嘉佳的文字总是能精准戳中泪点，云边镇的故事有笑有泪，外婆的爱太好哭了。离开的人会变成星星，照亮回家的路。</p >
+        <div class="date">2026.01.10</div>
+      </div>
+      
+      <!-- 电影示例 -->
+      <div class="review-card" data-category="电影">
+        <h3>周处除三害</h3>
+        <span class="tag">电影</span>
+        <div class="rating">⭐⭐⭐⭐⭐ (满分)</div>
+        <p class="desc">年度最佳华语片之一，节奏紧凑，人物刻画立体。人这一生，总要做一件对的事，哪怕是最后一件。</p >
+        <div class="date">2026.02.28</div>
+      </div>
+
+      <!-- 新增音乐示例：不用带脑子听 -->
+      <div class="review-card" data-category="音乐" data-subcategory="听了静不下心">
+        <h3>早安晨之美</h3>
+        <span class="tag">音乐</span>
+        <span class="sub-tag">听了静不下心</span>
+        <div class="rating">⭐⭐⭐⭐⭐ (满分)</div>
+        <p class="desc">卢广仲的快乐歌，听着就想跟着晃脑袋，适合早上起床当闹钟，一整天都有好心情～</p >
+        <div class="date">2026.03.23</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 底部 -->
+  <footer>
+    <p>© 2026 {siteName} | 小庭严肃评价！</p >
+  </footer>
+
+  <script>
+    // 分类标签切换功能
+    const tabs = document.querySelectorAll('.category-tab');
+    const subTabs = document.getElementById('musicSubTabs');
+    const musicSubTabs = document.querySelectorAll('.music-sub-tab');
+    const cards = document.querySelectorAll('.review-card');
+    let currentCategory = '全部';
+    let currentSubCategory = '全部';
+
+    // 一级分类切换
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentCategory = tab.dataset.category;
+        currentSubCategory = '全部';
+
+        // 显示/隐藏音乐二级分类
+        if (currentCategory === '音乐') {
+          subTabs.style.display = 'flex';
+          musicSubTabs.forEach(t => t.classList.remove('active'));
+          musicSubTabs[0].classList.add('active');
+        } else {
+          subTabs.style.display = 'none';
+        }
+
+        filterCards();
+      });
+    });
+
+    // 音乐二级分类切换
+    musicSubTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        musicSubTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentSubCategory = tab.dataset.subcategory;
+        filterCards();
+      });
+    });
+
+    // 统一筛选函数
+    function filterCards() {
+      cards.forEach(card => {
+        const cardCategory = card.dataset.category;
+        const cardSubCategory = card.dataset.subcategory || '全部';
+        let show = false;
+
+        if (currentCategory === '全部') {
+          show = true;
+        } else if (currentCategory === '音乐') {
+          if (cardCategory === '音乐') {
+            show = currentSubCategory === '全部' || cardSubCategory === currentSubCategory;
+          } else {
+            show = false;
+          }
+        } else {
+          show = cardCategory === currentCategory;
+        }
+
+        card.style.display = show ? 'block' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

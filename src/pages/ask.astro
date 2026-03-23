@@ -1,0 +1,68 @@
+---
+layout: "../layouts/Base.astro"
+title: "匿名提问箱"
+---
+
+<head>
+  <!-- 强制 UTF-8 编码，彻底解决乱码问题 -->
+  <meta charset="UTF-8" />
+</head>
+
+<style>
+  /* 全局粉色主题变量，和你网站风格统一 */
+  :root {
+    --primary-pink: #f8bbd0;
+    --bg-pink: #fff5f8;
+    --border-pink: #f48fb1;
+    --text-color: #424242;
+  }
+
+  /* 页面主体容器 */
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* 标题样式 */
+  main h1 {
+    color: var(--text-color);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* 描述文本样式 */
+  main p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  /* 迷你板 iframe 样式（粉色边框+圆角） */
+  .miniban-iframe {
+    width: 100%;
+    height: 750px;
+    border: 1px solid var(--border-pink);
+    border-radius: 12px;
+    background-color: var(--bg-pink);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+</style>
+
+<main>
+  <h1>💌 匿名提问箱</h1>
+  <p>无需登录，直接留下你的问题或想法，我会定期查看并回复~</p >
+
+  <!-- 迷你板匿名提问箱 iframe -->
+  <iframe
+    src="http://yj200ts.powerbbs.cn"
+    class="miniban-iframe"
+    frameborder="0"
+    scrolling="auto"
+    loading="lazy"
+    title="匿名提问箱"
+  ></iframe>
+</main>
