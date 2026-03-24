@@ -1,0 +1,67 @@
+---
+layout: "../layouts/Base.astro"
+title: "留言板"
+---
+
+<!-- 修复乱码 + 粉色主题样式 -->
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    /* 全局粉色主题变量 */
+    :root {
+      --giscus-primary: #f8bbd0;
+      --giscus-bg: #fff5f8;
+      --giscus-border: #f48fb1;
+      --giscus-text: #424242;
+    }
+    /* 页面文字样式 */
+    main h1, main p {
+      color: var(--giscus-text);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    /* 覆盖 giscus 默认样式，实现粉色主题 */
+    .giscus {
+      background: var(--giscus-bg) !important;
+      border-radius: 12px !important;
+      padding: 16px !important;
+      border: 1px solid var(--giscus-border) !important;
+      margin-top: 20px;
+    }
+    .giscus .giscus-header,
+    .giscus .giscus-button {
+      background: var(--giscus-primary) !important;
+      border-color: var(--giscus-border) !important;
+      color: var(--giscus-text) !important;
+    }
+    .giscus .giscus-textarea {
+      background: #ffffff !important;
+      border-color: var(--giscus-border) !important;
+    }
+    .giscus .giscus-comment {
+      border-bottom: 1px solid var(--giscus-border) !important;
+    }
+  </style>
+</head>
+
+<main>
+  <h1>留言板</h1>
+  <p>欢迎留下你的想法</p >
+</main>
+
+<!-- giscus 评论区代码（含匿名尝试 + 粉色主题） -->
+<script src="https://giscus.app/client.js"
+        data-repo="yj200ts/yj200ts.github.io"
+        data-repo-id="R_kgDORte_-w"
+        data-category="General"
+        data-category-id="DIC_kwDORte_-84CblS_"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="zh-CN"
+        data-allow-anonymous="1"
+        crossorigin="anonymous"
+        async>
+</script>
