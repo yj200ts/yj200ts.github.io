@@ -1,0 +1,656 @@
+---
+layout: "../layouts/Base.astro"
+title: "提问留言板"
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<style>
+  /* 全局样式（和全站保持一致） */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Microsoft Yahei", sans-serif;
+    background: #fff0f6;
+    background-image: radial-gradient(pink 2px, transparent 2px);
+    background-size: 20px 20px;
+    background-repeat: repeat;
+    min-height: 100vh;
+    color: #5a5a5a;
+    line-height: 1.6;
+  }
+
+  /* 导航栏 */
+  nav {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(230, 73, 128, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .nav-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e64980;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: #666;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover {
+    color: #e64980;
+  }
+  .nav-links a.active {
+    color: #e64980;
+    font-weight: bold;
+  }
+
+  /* 页面主体 */
+  .page {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
+  .page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .page-header h1 {
+    color: #e64980;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  .page-header p {
+    color: #999;
+    font-size: 1rem;
+  }
+
+  /* 提问表单卡片 */
+  .question-form {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(230, 73, 128, 0.1);
+    margin-bottom: 2rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .question-form:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(230, 73, 128, 0.15);
+  }
+  .form-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e64980;
+  }
+  .form-title span:first-child {
+    font-size: 1.5rem;
+  }
+  .question-form textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #ffe0e7;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease;
+    background: #fffafc;
+  }
+  .question-form textarea:focus {
+    outline: none;
+    border-color: #e64980;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(230, 73, 128, 0.1);
+  }
+  .question-form button {
+    background: linear-gradient(135deg, #e64980 0%, #d43f73 100%);
+    color: white;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .question-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(230, 73, 128, 0.3);
+  }
+
+  /* 问题列表 */
+  .questions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* 问题卡片 - 独立边框 */
+  .question-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(230, 73, 128, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(244, 143, 177, 0.2);
+  }
+  .question-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(230, 73, 128, 0.12);
+    border-color: rgba(230, 73, 128, 0.3);
+  }
+
+  /* 卡片头部 */
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #fff0f6;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .question-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .question-number {
+    background: linear-gradient(135deg, #e64980 0%, #f06292 100%);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+  .question-date {
+    color: #999;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .status-badge.answered {
+    background: #e8f5e9;
+    color: #4caf50;
+  }
+  .status-badge.waiting {
+    background: #fff3e0;
+    color: #ff9800;
+  }
+  .delete-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 4px 8px;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+  }
+  .delete-btn:hover {
+    color: #e64980;
+    background: #fff0f6;
+  }
+
+  /* 问题内容区域 */
+  .question-content {
+    background: #fffafc;
+    padding: 1rem;
+    border-radius: 16px;
+    margin-bottom: 1rem;
+    border-left: 3px solid #e64980;
+  }
+  .question-label {
+    font-size: 0.7rem;
+    color: #e64980;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .question-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #424242;
+  }
+
+  /* 回答区域 */
+  .answer-area {
+    margin-top: 1rem;
+  }
+  .answer-box {
+    background: #fff0f6;
+    padding: 1rem;
+    border-radius: 16px;
+    border-left: 3px solid #f48fb1;
+  }
+  .answer-label {
+    font-size: 0.7rem;
+    color: #e64980;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .answer-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #666;
+  }
+  .waiting-text {
+    background: #f9f9f9;
+    padding: 0.8rem;
+    border-radius: 12px;
+    text-align: center;
+    color: #999;
+    font-size: 0.85rem;
+  }
+
+  /* 回答输入框 */
+  .answer-input-wrapper {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  .answer-input-wrapper input {
+    flex: 1;
+    padding: 10px 16px;
+    border: 2px solid #ffe0e7;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+  }
+  .answer-input-wrapper input:focus {
+    outline: none;
+    border-color: #e64980;
+  }
+  .answer-submit-btn {
+    padding: 10px 20px;
+    background: #e64980;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .answer-submit-btn:hover {
+    background: #d43f73;
+    transform: translateY(-1px);
+  }
+
+  /* 管理员按钮 */
+  .admin-panel {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+  }
+  .admin-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: white;
+    color: #e64980;
+    border: 2px solid #e64980;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  .admin-btn:hover {
+    transform: scale(1.08);
+    background: #e64980;
+    color: white;
+  }
+
+  /* 空状态 */
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    color: #999;
+  }
+  .empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  /* 底部 */
+  footer {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    text-align: center;
+    color: #999;
+    border-top: 1px solid rgba(230, 73, 128, 0.15);
+    margin-top: 3rem;
+  }
+
+  /* 响应式 */
+  @media (max-width: 600px) {
+    .page {
+      padding: 0 1rem;
+      margin: 2rem auto;
+    }
+    .question-form {
+      padding: 1.5rem;
+    }
+    .question-card {
+      padding: 1rem;
+    }
+    .answer-input-wrapper {
+      flex-direction: column;
+    }
+    .answer-submit-btn {
+      width: 100%;
+    }
+    .nav-container {
+      flex-direction: column;
+      text-align: center;
+    }
+    .nav-links {
+      justify-content: center;
+    }
+  }
+</style>
+
+<body>
+  <!-- 导航栏（和全站一致） -->
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="nav-logo">小庭小世界</a>
+      <div class="nav-links">
+        <a href="/">首页</a>
+        <a href="/diary">小日记</a>
+        <a href="/review">音影书评</a>
+        <a href="/guestbook">留言板</a>
+        <a href="/ask" class="active">提问箱</a>
+        <a href="/postcard">明信片</a>
+        <a href="/about">关于我</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主要内容区 -->
+  <main class="page">
+    <div class="page-header">
+      <h1>💌 提问留言板</h1>
+      <p>无需登录，直接留下你的评论和提问</p>
+    </div>
+
+    <!-- 提问表单卡片 -->
+    <div class="question-form">
+      <div class="form-title">
+        <span>📝</span>
+        <span>写下你的问题</span>
+      </div>
+      <textarea id="questionInput" rows="3" placeholder="想对小庭说什么？什么问题都可以问哦~ 小庭会认真回复你的！"></textarea>
+      <button onclick="submitQuestion()">
+        <span>✨</span>
+        <span>匿名提问</span>
+      </button>
+    </div>
+
+    <!-- 问题列表 -->
+    <div class="questions-list" id="questionsList">
+      <!-- 问题会动态加载 -->
+    </div>
+  </main>
+
+  <!-- 底部 -->
+  <footer>
+    <p>© 2026 小庭小世界 | 小庭的小世界 我在等待你和我互动哦~</p>
+  </footer>
+
+  <!-- 管理员按钮 -->
+  <div class="admin-panel">
+    <button class="admin-btn" id="adminBtn" onclick="toggleAdmin()">🔒</button>
+  </div>
+
+  <script is:inline>
+    // 管理员密码
+    const ADMIN_PASSWORD = "xiaoting520";
+    
+    // 存储所有问题
+    let questions = [];
+    let isAdmin = false;
+
+    // 从 localStorage 加载数据
+    function loadFromStorage() {
+      const saved = localStorage.getItem('questions_data_final');
+      if (saved) {
+        questions = JSON.parse(saved);
+      } else {
+        // 没有示例问题，直接为空数组
+        questions = [];
+        saveToStorage();
+      }
+      renderQuestions();
+    }
+
+    // 保存到 localStorage
+    function saveToStorage() {
+      localStorage.setItem('questions_data_final', JSON.stringify(questions));
+    }
+
+    // 渲染问题列表
+    function renderQuestions() {
+      const container = document.getElementById('questionsList');
+      
+      if (questions.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">💭</div>
+            <div>还没有提问～</div>
+            <div style="font-size: 0.85rem; margin-top: 0.5rem;">来做第一个提问的人吧！</div>
+          </div>
+        `;
+        return;
+      }
+      
+      // 按时间倒序排列
+      const sortedQuestions = [...questions].reverse();
+      
+      container.innerHTML = sortedQuestions.map((q, idx) => {
+        const originalIndex = questions.findIndex(item => item.id === q.id);
+        const questionNumber = questions.length - originalIndex;
+        
+        return `
+          <div class="question-card" data-id="${q.id}">
+            <div class="card-header">
+              <div class="question-meta">
+                <span class="question-number">#${questionNumber}</span>
+                <span class="question-date">
+                  <span>📅</span> ${q.date}
+                </span>
+                <span class="status-badge ${q.answered ? 'answered' : 'waiting'}">
+                  ${q.answered ? '✓ 已回复' : '⏳ 等待回复'}
+                </span>
+              </div>
+              ${isAdmin ? `<button class="delete-btn" onclick="deleteQuestion(${originalIndex})" title="删除问题">🗑️</button>` : ''}
+            </div>
+            
+            <div class="question-content">
+              <div class="question-label">
+                <span>💬</span>
+                <span>提问</span>
+              </div>
+              <div class="question-text">${escapeHtml(q.content)}</div>
+            </div>
+            
+            <div class="answer-area">
+              ${q.answered ? `
+                <div class="answer-box">
+                  <div class="answer-label">
+                    <span>💖</span>
+                    <span>小庭的回答</span>
+                  </div>
+                  <div class="answer-text">${escapeHtml(q.answer)}</div>
+                </div>
+              ` : (isAdmin ? `
+                <div class="answer-input-wrapper">
+                  <input type="text" id="answer_${originalIndex}" placeholder="写下你的回答..." />
+                  <button class="answer-submit-btn" onclick="submitAnswer(${originalIndex})">
+                    ✨ 回复
+                  </button>
+                </div>
+              ` : `
+                <div class="waiting-text">
+                  ⏳ 等待小庭的回复中...
+                </div>
+              `)}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 提交新问题
+    function submitQuestion() {
+      const content = document.getElementById('questionInput').value.trim();
+      
+      if (!content) {
+        alert('💬 请写下你的问题～');
+        return;
+      }
+      
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      
+      const newQuestion = {
+        id: Date.now(),
+        content: content,
+        answer: "",
+        date: dateStr,
+        answered: false
+      };
+      
+      questions.push(newQuestion);
+      saveToStorage();
+      renderQuestions();
+      
+      document.getElementById('questionInput').value = '';
+      alert('✨ 提问成功！小庭会尽快回复你的～');
+    }
+
+    // 提交回答（仅管理员）
+    function submitAnswer(index) {
+      if (!isAdmin) {
+        alert('只有小庭可以回答问题哦～');
+        return;
+      }
+      
+      const answerInput = document.getElementById(`answer_${index}`);
+      const answer = answerInput.value.trim();
+      
+      if (!answer) {
+        alert('💖 请写下你的回答～');
+        return;
+      }
+      
+      questions[index].answer = answer;
+      questions[index].answered = true;
+      saveToStorage();
+      renderQuestions();
+    }
+
+    // 删除问题（仅管理员）
+    function deleteQuestion(index) {
+      if (!isAdmin) {
+        alert('只有小庭可以删除问题哦～');
+        return;
+      }
+      
+      if (confirm('确定要删除这个问题吗？')) {
+        questions.splice(index, 1);
+        saveToStorage();
+        renderQuestions();
+      }
+    }
+
+    // 切换管理员模式
+    function toggleAdmin() {
+      if (isAdmin) {
+        isAdmin = false;
+        document.getElementById('adminBtn').innerHTML = '🔒';
+        document.getElementById('adminBtn').style.background = 'white';
+        document.getElementById('adminBtn').style.color = '#e64980';
+        renderQuestions();
+      } else {
+        const password = prompt('请输入管理员密码：');
+        if (password === ADMIN_PASSWORD) {
+          isAdmin = true;
+          document.getElementById('adminBtn').innerHTML = '🔓';
+          document.getElementById('adminBtn').style.background = '#e64980';
+          document.getElementById('adminBtn').style.color = 'white';
+          renderQuestions();
+        } else if (password !== null) {
+          alert('密码错误！');
+        }
+      }
+    }
+
+    // 防XSS
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
+    }
+
+    // 初始化
+    loadFromStorage();
+  </script>
+</body>
