@@ -10,200 +10,188 @@ const slogan = "这是我的地盘！hhh";
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{siteName}</title>
   <style is:raw>
-    /* 全局样式 */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      font-family: "Microsoft Yahei", sans-serif;
-      /* 极简写法：纯色背景 + 高对比度波点，必显！ */
-      background-color: #fff0f6; /* 基础粉色底 */
-      background-image: radial-gradient(#e64980 2px, transparent 2px); /* 深粉色波点 */
-      background-size: 30px 30px; /* 波点间距，越大越稀疏 */
-      background-position: 0 0; /* 波点起始位置 */
-      color: #5a5a5a;
+      font-family: SimSun, "宋体", sans-serif;
+      background: #fff0f6;
+      background-image: radial-gradient(pink 1px, transparent 1px);
+      background-size: 20px 20px;
+      font-size: 14px;
       line-height: 1.6;
-      min-height: 100vh; /* 铺满整个页面 */
+      color: #333;
     }
 
-    /* 导航栏 */
     nav {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 1rem 2rem;
-      box-shadow: 0 2px 10px rgba(230, 73, 128, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .nav-logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #e64980;
-      text-decoration: none;
+      width: 92%;
+      max-width: 800px;
+      margin: 10px auto;
+      border: 2px solid #F4A7C1;
+      background: #FFF;
+      padding: 8px;
+      text-align: center;
     }
     .nav-links {
       display: flex;
-      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
     }
     .nav-links a {
+      color: #C45A81;
       text-decoration: none;
-      color: #666;
+      font-size: 14px;
+      padding: 4px 8px;
+      border: 1px solid #F4A7C1;
+      background: #FFE6F0;
+      font-family: SimSun, "宋体" !important;
     }
     .nav-links a:hover {
-      color: #e64980;
+      background: #F4A7C1;
+      color: #FFF;
+    }
+    .nav-links a.active {
+      background: #F4A7C1;
+      color: #FFF;
+      font-weight: normal;
     }
 
-    /* 粉色渐变 Banner */
     .banner {
-      background: linear-gradient(135deg, #f8a5c2 0%, #fadadd 100%);
-      color: white;
-      padding: 4rem 2rem;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 22px 10px;
       text-align: center;
-      /* 遮挡banner内的波点 */
-      background-image: linear-gradient(135deg, #f8a5c2 0%, #fadadd 100%);
+      background: repeating-linear-gradient(
+        -45deg,
+        #ffffff,
+        #ffffff 10px,
+        #ffe6f0 10px,
+        #ffe6f0 20px
+      );
+      border: 1px solid #C45A81;
     }
     .banner h1 {
-      font-size: 2.2rem;
-      margin-bottom: 0.8rem;
+      font-size: 20px;
+      color: #e64980;
+      margin-bottom: 4px;
+      font-family: SimSun, "宋体";
     }
     .banner p {
-      font-size: 1.1rem;
-      opacity: 0.9;
+      font-size: 14px;
+      color: #666;
     }
 
-    /* 卡片布局 */
     .sections {
-      max-width: 1200px;
-      margin: 3rem auto;
-      padding: 0 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
     .section-card {
-      background: rgba(255, 255, 255, 0.85);
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(230, 73, 128, 0.1);
+      background: #fff;
+      border: 1px solid #C45A81;
+      padding: 10px;
     }
     .section-card h3 {
+      font-size: 14px;
       color: #e64980;
-      margin-bottom: 1rem;
-      font-size: 1.2rem;
+      margin-bottom: 6px;
+      font-family: SimSun, "宋体";
     }
     .section-card p {
-      color: #777;
-      margin-bottom: 1.5rem;
-      font-size: 0.95rem;
+      font-size: 14px;
+      margin-bottom: 6px;
     }
     .section-card a {
-      color: #e64980;
+      font-size: 14px;
+      color: #C45A81;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 0.95rem;
     }
 
-    /* 最新动态 */
     .latest {
-      max-width: 1200px;
-      margin: 0 auto 3rem;
-      padding: 0 2rem;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 1rem;
     }
     .latest h2 {
+      font-size: 16px;
       color: #e64980;
-      margin-bottom: 1.5rem;
-      font-size: 1.4rem;
+      margin-bottom: 10px;
+      font-family: SimSun, "宋体";
     }
     .latest-item {
-      background: rgba(255, 255, 255, 0.85);
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(230, 73, 128, 0.1);
+      background: #fff;
+      border: 1px solid #C45A81;
+      padding: 6px 10px;
+      margin-bottom: 8px;
+      font-size: 14px;
     }
 
-    /* 底部 */
     footer {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 2rem;
       text-align: center;
+      margin: 30px 0;
       color: #999;
-      border-top: 1px solid rgba(230, 73, 128, 0.15);
-      /* 遮挡footer内的波点 */
-      background-image: none;
+      font-size: 12px;
     }
   </style>
 </head>
 <body>
-  <!-- 导航 -->
-  <nav>
-    <div class="nav-container">
-      <a href="/" class="nav-logo">{siteName}</a>
-      <div class="nav-links">
-        <a href="/">首页</a>
-        <a href="/diary">小日记</a>
-        <a href="/review">音影书评</a>
-        <a href="/guestbook">留言板</a>
-        <a href="/ask">提问箱</a>
-        <a href="/postcard">明信片</a>
-        <a href="/about">关于我</a>
-      </div>
-    </div>
-  </nav>
 
-  <!-- 粉色渐变 Banner -->
-  <section class="banner">
-    <h1>欢迎来到 {siteName}</h1>
-    <p>{slogan}</p>
-  </section>
+<nav>
+  <div class="nav-links">
+    <a href="/" class="active">首页</a>
+    <a href="/diary">小日记</a>
+    <a href="/review">音影书评</a>
+    <a href="/guestbook">留言板</a>
+    <a href="/ask">提问箱</a>
+    <a href="/postcard">明信片</a>
+    <a href="/about">关于我</a>
+  </div>
+</nav>
 
-  <!-- 卡片模块 -->
-  <section class="sections">
-    <div class="section-card">
-      <h3>📝 小日记</h3>
-      <p>日常碎碎碎碎碎碎念！</p>
-      <a href="/diary">去看看 →</a>
-    </div>
-    <div class="section-card">
-      <h3>🎵音影书评</h3>
-      <p>严肃评价！</p>
-      <a href="/review">去看看 →</a>
-    </div>
-    <div class="section-card">
-      <h3>📮🎑 postcard</h3>
-      <p>和我一起互寄吧！</p>
-      <a href="/postcard">去看看 →</a>
-    </div>
-    <div class="section-card">
-      <h3>💬 留言板</h3>
-      <p>留下你的足迹与心意流</p>
-      <a href="/guestbook">去看看 →</a>
-    </div>
-  </section>
+<section class="banner">
+  <h1>欢迎来到 {siteName}</h1>
+  <p>{slogan}</p>
+</section>
 
-  <!-- 更新明细 -->
-  <section class="latest">
-    <h2>最新动态</h2>
-<div class="latest-item" style="margin-bottom: 1rem;">
-  <span>⚙️ 2026-03-23 | 更新了影音书评、留言板 </span>
-</div>
+<section class="sections">
+  <div class="section-card">
+    <h3>📝 小日记</h3>
+    <p>日常碎碎碎碎碎碎念！</p>
+    <a href="/diary">去看看 →</a>
+  </div>
+  <div class="section-card">
+    <h3>🎵 音影书评</h3>
+    <p>严肃评价！</p>
+    <a href="/review">去看看 →</a>
+  </div>
+  <div class="section-card">
+    <h3>📮🎑 postcard</h3>
+    <p>和我一起互寄吧！</p>
+    <a href="/postcard">去看看 →</a>
+  </div>
+  <div class="section-card">
+    <h3>💬 留言板</h3>
+    <p>留下你的足迹与心意流</p>
+    <a href="/guestbook">去看看 →</a>
+  </div>
+</section>
 
-<div class="latest-item" style="margin-bottom: 1rem;">
-  <span>⚙️ 2026-03-22 | 更新了小日记和关于我 </span>
-</div>
-  </section>
+<section class="latest">
+  <h2>最新动态</h2>
+  <div class="latest-item">⚙️ 2026-03-23 | 更新了影音书评、留言板</div>
+  <div class="latest-item">⚙️ 2026-03-22 | 更新了小日记和关于我</div>
+</section>
 
-  <!-- 底部 -->
-  <footer>
-    <p>© 2026 {siteName} | 这是小庭的地盘，正在吃茄子的人不得入内</p>
-  </footer>
+<footer>
+  © 2026 {siteName} | 这是小庭的地盘，正在吃茄子的人不得入内
+</footer>
+
 </body>
 </html>

@@ -1,0 +1,255 @@
+---
+const siteName = "小庭小世界";
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>明信片 | {siteName}</title>
+  
+  <style is:raw>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: SimSun, "宋体", sans-serif;
+      background: #fff0f6;
+      background-image: radial-gradient(pink 1px, transparent 1px);
+      background-size: 20px 20px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    nav {
+      width: 92%;
+      max-width: 800px;
+      margin: 10px auto;
+      border: 2px solid #F4A7C1;
+      background: #FFF;
+      padding: 8px;
+      text-align: center;
+    }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+    }
+    .nav-links a {
+      color: #C45A81;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 4px 8px;
+      border: 1px solid #F4A7C1;
+      background: #FFE6F0;
+      font-family: SimSun, "宋体" !important;
+    }
+    .nav-links a:hover {
+      background: #F4A7C1;
+      color: #FFF;
+    }
+    .nav-links a.active {
+      background: #F4A7C1;
+      color: #FFF;
+      font-weight: normal;
+    }
+
+    .page {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 1rem;
+    }
+    .page-title {
+      text-align: center;
+      font-size: 20px;
+      color: #e64980;
+      margin-bottom: 16px;
+      font-family: SimSun, "宋体";
+    }
+
+    /* 互寄要求板块 */
+    .rule-box {
+      background: #fff;
+      border: 1px solid #C45A81;
+      padding: 10px;
+      margin-bottom: 16px;
+    }
+    .rule-box h3 {
+      font-size: 14px;
+      color: #e64980;
+      margin-bottom: 6px;
+      font-family: SimSun, "宋体";
+    }
+    .rule-box ul {
+      padding-left: 20px;
+    }
+    .rule-box li {
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .tab {
+      padding: 4px 12px;
+      background: #FFE6F0;
+      border: 1px solid #F4A7C1;
+      cursor: pointer;
+      font-family: SimSun, "宋体";
+    }
+    .tab.active {
+      background: #F4A7C1;
+      color: #fff;
+    }
+
+    .panel {
+      display: none;
+    }
+    .panel.active {
+      display: block;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #C45A81;
+      padding: 10px;
+      margin-bottom: 12px;
+    }
+    .card h3 {
+      font-size: 14px;
+      color: #e64980;
+      margin-bottom: 6px;
+    }
+    .card p {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    .card img {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      border: 1px solid #ddd;
+      margin: 8px 0;
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      margin: 30px 0;
+      color: #999;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-links">
+    <a href="/">首页</a>
+    <a href="/diary">小日记</a>
+    <a href="/review">音影书评</a>
+    <a href="/guestbook">留言板</a>
+    <a href="/ask">提问箱</a>
+    <a href="/postcard" class="active">明信片</a>
+    <a href="/about">关于我</a>
+  </div>
+</nav>
+
+<main class="page">
+  <h1 class="page-title">📮 明信片合集</h1>
+
+  <!-- ========== 互寄要求板块（已加好） ========== -->
+  <div class="rule-box">
+    <h3>📩 互寄要求（请先阅读）</h3>
+    <ul>
+      <li>不互寄广告片，风景片，二次元片，劣质印刷片</li>
+      <li>默认满实不摘，无特殊情况默认实寄</li>
+      <li>互相尊重，友好交流～</li>
+    </ul>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-target="sent">寄出</div>
+    <div class="tab" data-target="received">收到</div>
+    <div class="tab" data-target="show">展示</div>
+  </div>
+
+  <!-- 寄出（带图片） -->
+  <div class="panel active" id="sent">
+    <div class="card">
+      <h3>✉️ 寄出 · sc</h3>
+      <img src="/assets/p1.jpg" alt="寄出明信片">
+      <p>日期：2026.03.16</p>
+    </div>
+    <div class="card">
+      <h3>✉️ 寄出 · sc</h3>
+      <img src="/assets/p2.jpg" alt="寄出明信片">
+      <p>日期：2026.03.15</p>
+    </div>
+  </div>
+
+  <!-- 收到（带图片） -->
+  <div class="panel" id="received">
+    <div class="card">
+      <h3>📩 收到 · 来自温州</h3>
+      <img src="/assets/r1.jpg" alt="收到明信片">
+      <p>日期：2026.03.06</p>
+      <p>来自：10 </p>
+    </div>
+    <div class="card">
+      <h3>📩 收到 · 来自大连</h3>
+      <img src="/assets/r2.jpg" alt="收到明信片">
+      <p>日期：2026.03.08</p>
+      <p>来自：zzh</p>
+    </div>
+    <div class="card">
+      <h3>📩 收到 · 来自日本</h3>
+      <img src="/assets/r3.jpg" alt="收到明信片">
+      <p>日期：2026.02</p>
+      <p>来自：拒绝emo</p>
+    </div>
+  </div>
+
+  <!-- 展示（带图片） -->
+  <div class="panel" id="show">
+    <div class="card">
+      <h3>🎑 展示 · 大和谐</h3>
+      <img src="/assets/z1.jpg" alt="展示明信片">
+      <p>描述：八达岭实地</p>
+    </div>
+    <div class="card">
+      <h3>🎑 展示 · 插画</h3>
+      <img src="/assets/z2.jpg" alt="展示明信片">
+      <p>描述：和卢广仲歌词适配度如此之高啊！！！</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2026 {siteName} | 小庭的明信片小世界
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.dataset.target;
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.getElementById(target).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

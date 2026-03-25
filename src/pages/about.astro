@@ -10,143 +10,154 @@ const siteName = "小庭小世界";
   <title>关于我 | {siteName}</title>
   
   <style is:raw>
-    /* 全局样式（和全站保持一致） */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-body {
-  font-family: "Microsoft Yahei", sans-serif;
-  background: #fff0f6;
-  background-image: radial-gradient(pink 2px, transparent 2px);
-  background-size: 20px 20px;
-  background-repeat: repeat;
-  min-height: 100vh;
-  color: #5a5a5a;
-  line-height: 1.6;
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-    /* 导航栏 */
-    nav {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 1rem 2rem;
-      box-shadow: 0 2px 10px rgba(230, 73, 128, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .nav-logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #e64980;
-      text-decoration: none;
-    }
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: #666;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover {
-      color: #e64980;
-    }
+body {
+  font-family: SimSun, "宋体", sans-serif !important;
+  background: #FFF0F6;
+  background-image: radial-gradient(pink 1px, transparent 1px);
+  background-size: 20px 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+}
 
-    /* 页面主体 */
-    .page {
-      max-width: 800px;
-      margin: 3rem auto;
-      padding: 0 2rem;
-    }
-    .page h1 {
-      color: #e64980;
-      margin-bottom: 2rem;
-      font-size: 2rem;
-    }
-    .about-card {
-      background: rgba(255, 255, 255, 0.85);
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(230, 73, 128, 0.1);
-    }
-    .about-card p {
-      margin-bottom: 1rem;
-      font-size: 1.05rem;
-    }
-    .about-card h3 {
-      color: #e64980;
-      margin: 1.5rem 0 0.8rem;
-    }
-    .about-card ul {
-      padding-left: 1.5rem;
-    }
-    .about-card li {
-      margin-bottom: 0.5rem;
-    }
+nav {
+  width: 92%;
+  max-width: 800px;
+  margin: 10px auto;
+  border: 2px solid #F4A7C1;
+  background: #FFF;
+  padding: 8px;
+  text-align: center;
+}
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+.nav-links a {
+  color: #C45A81;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 4px 8px;
+  border: 1px solid #F4A7C1;
+  background: #FFE6F0;
+  font-family: SimSun, "宋体" !important;
+}
+.nav-links a:hover {
+  background: #F4A7C1;
+  color: #FFF;
+}
+.nav-links a.active {
+  background: #F4A7C1;
+  color: #FFF;
+  font-weight: normal;
+}
 
-    /* 底部 */
-    footer {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 2rem;
-      text-align: center;
-      color: #999;
-      border-top: 1px solid rgba(230, 73, 128, 0.15);
-      margin-top: 3rem;
-    }
+.page {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 1rem;
+}
+.page h1 {
+  color: #e64980;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 8px;
+  font-family: SimSun, "宋体";
+}
+
+/* ========== 超小头像 48x48px ========== */
+.my-photo {
+  display: block;
+  margin: 0 auto 12px;
+  width: 48px;     /* 超小宽度 */
+  height: 48px;    /* 超小高度 */
+  object-fit: cover;
+  border: 1px solid #F4A7C1;
+  border-radius: 4px;
+}
+
+.about-card {
+  background: #fff;
+  border: 1px solid #C45A81;
+  padding: 10px;
+}
+.about-card p {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.about-card h3 {
+  font-size: 14px;
+  color: #e64980;
+  margin: 12px 0 6px;
+  font-family: SimSun, "宋体";
+}
+.about-card ul {
+  margin-left: 20px;
+}
+.about-card li {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+footer {
+  text-align: center;
+  margin: 30px 0;
+  color: #999;
+  font-size: 12px;
+}
   </style>
 </head>
 <body>
-  <!-- 导航栏（和全站一致） -->
-  <nav>
-    <div class="nav-container">
-      <a href=" " class="nav-logo">{siteName}</a >
-      <div class="nav-links">
-        <a href="/">首页</a >
-        <a href="/diary">小日记</a >
-        <a href="/review">音影书评</a >
-        <a href="/guestbook">留言板</a >
-        <a href="/ask">提问箱</a >
-        <a href="/postcard">明信片</a >
-        <a href="/about">关于我</a >
-      </div>
-    </div>
-  </nav>
 
-  <!-- 关于我内容区 -->
-  <main class="page">
-    <h1>✨ 关于我</h1>
-    <div class="about-card">
-      <p>你好呀！我是小庭，这里是我的小世界～</p >
-      
-      <h3>💡 关于这个网站</h3>
-      <p>生活无聊产物 这里记录我的日常碎碎念、看过的书和电影，还有一些珍贵的回忆～</p >
-      
-      <h3>🎈 我的小爱好</h3>
-      <ul>
-        <li>卢广仲超级粉丝</li>
-        <li>喜欢明信片，追求片票戳终极大和谐的非极限实寄爱好者</li>
-        <li>会手写日记，记录生活里的大幸福大烦恼</li>
-      </ul>
-      
-      <h3>📮 联系方式</h3>
-      <p>邮箱：yuji200s@126.com </p >
-      <p>如果你想和我聊天，可以去「留言板」或「提问箱」给我留言～但是现在还没有建设好（buhaoyisi</p >
-    </div>
-  </main>
+<nav>
+  <div class="nav-links">
+    <a href="/">首页</a>
+    <a href="/diary">小日记</a>
+    <a href="/review">音影书评</a>
+    <a href="/guestbook">留言板</a>
+    <a href="/ask">提问箱</a>
+    <a href="/postcard">明信片</a>
+    <a href="/about" class="active">关于我</a>
+  </div>
+</nav>
 
-  <!-- 底部 -->
-  <footer>
-    <p>© 2026 {siteName} | 小庭的小世界 哈哈哈欢迎你来看小庭啊</p >
-  </footer>
+<main class="page">
+  <h1>✨ 关于我</h1>
+
+  <!-- 迷你小头像 -->
+  <img src="/assets/aboutme.jpg" alt="小庭" class="my-photo">
+
+  <div class="about-card">
+    <p>你好呀！我是小庭，这里是我的世界～</p>
+    
+    <h3>💡 关于这个网站</h3>
+    <p>生活无聊产物，感谢豆包、deepseek的鼎力支持，感谢大哥！</p>
+    <p>INFP低精力爱幻想，最近在找寻小时候的味道</p>
+
+    
+    <h3>🎈 我的小爱好</h3>
+    <ul>
+      <li>卢广仲超级粉丝</li>
+      <li>喜欢明信片，追求片票戳终极大和谐的非极限实寄爱好者</li>
+      <li>会手写日记，记录生活里的大幸福大烦恼</li>
+    </ul>
+    
+    <h3>📮 联系方式</h3>
+    <p>邮箱：yuji200s@126.com </p>
+    <p>如果你想和我聊天，可以去「留言板」或「提问箱」给我留言～虽然还没有做好（buhaoyisi</p>
+  </div>
+</main>
+
+<footer>
+  © 2026 {siteName} | 小庭的小世界 哈哈哈欢迎你来看小庭啊
+</footer>
 </body>
 </html>
