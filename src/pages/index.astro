@@ -85,6 +85,68 @@ const slogan = "这是我的地盘！hhh";
       color: #666;
     }
 
+    /* 游戏盒子 */
+    .game-box {
+      width: fit-content;
+      margin: 0 auto 25px;
+      padding: 15px;
+      background: #fff;
+      border: 3px solid #f4a7c1;
+      border-style: wavy;
+      position: relative;
+    }
+    .game-box::before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border: 2px solid #f8c8dc;
+      border-style: wavy;
+      pointer-events: none;
+    }
+
+    /* 所有格子都有方块！！ */
+    .puzzle {
+      display: grid;
+      grid-template-columns: repeat(3, 60px);
+      gap: 6px;
+    }
+    .puzzle-item {
+      width: 60px;
+      height: 60px;
+      background: #ffe6f0;
+      border: 2px solid #f4a7c1;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #e64980;
+      cursor: pointer;
+    }
+    /* 只有空白格子隐藏文字，保留方块 */
+    .puzzle-item.empty {
+      color: transparent;
+    }
+
+    .game-info {
+      text-align: center;
+      color: #e64980;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    .reset-btn {
+      margin: 10px auto 0;
+      padding: 4px 10px;
+      border: 1px solid #f4a7c1;
+      background: #fff;
+      color: #e64980;
+      border-radius: 6px;
+      cursor: pointer;
+      display: block;
+      font-size: 13px;
+    }
+
     .sections {
       max-width: 800px;
       margin: 20px auto;
@@ -160,6 +222,12 @@ const slogan = "这是我的地盘！hhh";
   <p>{slogan}</p>
 </section>
 
+<div class="game-box">
+  <div class="game-info">步数：<span id="step">0</span></div>
+  <div class="puzzle" id="puzzle"></div>
+  <button class="reset-btn" onclick="initPuzzle()">重新开始</button>
+</div>
+
 <section class="sections">
   <div class="section-card">
     <h3>📝 小日记</h3>
@@ -176,22 +244,62 @@ const slogan = "这是我的地盘！hhh";
     <p>和我一起互寄吧！</p>
     <a href="/postcard">去看看 →</a>
   </div>
-  <div class="section-card">
-    <h3>💬 留言板</h3>
-    <p>留下你的足迹与心意流</p>
-    <a href="/guestbook">去看看 →</a>
-  </div>
 </section>
 
 <section class="latest">
   <h2>最新动态</h2>
-  <div class="latest-item">⚙️ 2026-03-23 | 更新了影音书评、留言板</div>
+  <div class="latest-item">⚙️ 2026-03-25 | 更新了明信片</div>
+  <div class="latest-item">⚙️ 2026-03-23 | 更新了音影书评、留言板</div>
   <div class="latest-item">⚙️ 2026-03-22 | 更新了小日记和关于我</div>
 </section>
 
 <footer>
   © 2026 {siteName} | 这是小庭的地盘，正在吃茄子的人不得入内
 </footer>
+
+<script>
+let step = 0;
+let arr = [1,2,3,4,5,6,7,8,0];
+
+function initPuzzle() {
+  step = 0;
+  document.getElementById("step").innerText = step;
+  arr = [1,2,3,4,5,6,7,8,0];
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  render();
+}
+
+function render() {
+  const p = document.getElementById("puzzle");
+  p.innerHTML = "";
+  arr.forEach(n => {
+    const d = document.createElement("div");
+    d.className = "puzzle-item " + (n === 0 ? "empty" : "");
+    d.innerText = n || "";
+    if(n !== 0) d.onclick = () => move(n);
+    p.appendChild(d);
+  });
+}
+
+function move(num) {
+  const i = arr.indexOf(num);
+  const e = arr.indexOf(0);
+  const ok = [i-1, i+1, i-3, i+3].includes(e);
+  if(!ok) return;
+  step++;
+  document.getElementById("step").innerText = step;
+  [arr[i],arr[e]] = [arr[e],arr[i]];
+  render();
+  if(arr.join() === [1,2,3,4,5,6,7,8,0].join()){
+    setTimeout(()=>alert("🎉 通关啦！你太棒啦！"),300);
+  }
+}
+
+window.onload = initPuzzle;
+</script>
 
 </body>
 </html>
